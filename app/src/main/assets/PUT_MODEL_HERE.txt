@@ -1,0 +1,10 @@
+Place your exported TorchScript model here.
+
+File name: unet_mobile.ptl
+
+How to generate it:
+  1. Run export_model.py (or the equivalent cell) at the end of your training notebook.
+  2. Download unet_mobile.ptl from Colab.
+  3. Copy it to this folder: app/src/main/assets/unet_mobile.ptl
+
+See README.md for full instructions.

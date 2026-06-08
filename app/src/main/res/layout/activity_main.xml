@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background">
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:paddingVertical="16dp"
+        android:background="@color/colorPrimary"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Images row label -->
+    <TextView
+        android:id="@+id/tvOriginalLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Original"
+        android:textSize="13sp"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:paddingTop="12dp"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tvMaskLabel" />
+
+    <TextView
+        android:id="@+id/tvMaskLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Segmented Mask"
+        android:textSize="13sp"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:paddingTop="12dp"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        app:layout_constraintStart_toEndOf="@id/tvOriginalLabel"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Original image -->
+    <ImageView
+        android:id="@+id/ivOriginal"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        android:background="@color/imagePlaceholder"
+        android:contentDescription="Original image"
+        app:layout_constraintTop_toBottomOf="@id/tvOriginalLabel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/ivMask"
+        app:layout_constraintBottom_toTopOf="@id/overlayContainer"
+        app:layout_constraintDimensionRatio="1:1"
+        android:layout_margin="8dp" />
+
+    <!-- Segmented mask image -->
+    <ImageView
+        android:id="@+id/ivMask"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        android:background="@color/imagePlaceholder"
+        android:contentDescription="Segmented mask"
+        app:layout_constraintTop_toBottomOf="@id/tvMaskLabel"
+        app:layout_constraintStart_toEndOf="@id/ivOriginal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/overlayContainer"
+        app:layout_constraintDimensionRatio="1:1"
+        android:layout_margin="8dp" />
+
+    <!-- Overlay container: original + blended mask on top -->
+    <FrameLayout
+        android:id="@+id/overlayContainer"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintTop_toBottomOf="@id/ivOriginal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tvMetrics">
+
+        <ImageView
+            android:id="@+id/ivOverlayBase"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:background="@color/imagePlaceholder"
+            android:contentDescription="Overlay base" />
+
+        <ImageView
+            android:id="@+id/ivOverlayMask"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:alpha="0.5"
+            android:contentDescription="Overlay mask"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tvOverlayHint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Overlay will appear here"
+            android:textColor="@color/hintText"
+            android:textSize="14sp" />
+    </FrameLayout>
+
+    <!-- Metrics text -->
+    <TextView
+        android:id="@+id/tvMetrics"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textColor="@color/white"
+        android:textSize="13sp"
+        android:gravity="center"
+        android:paddingVertical="6dp"
+        app:layout_constraintTop_toBottomOf="@id/overlayContainer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btnSelectImage" />
+
+    <!-- Buttons -->
+    <Button
+        android:id="@+id/btnSelectImage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="📷  Select Image"
+        android:backgroundTint="@color/colorSecondary"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@id/btnRunInference"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/btnRunInference"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="🔍  Run Segmentation"
+        android:backgroundTint="@color/colorPrimary"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginBottom="16dp"
+        android:enabled="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Progress bar shown during inference -->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
